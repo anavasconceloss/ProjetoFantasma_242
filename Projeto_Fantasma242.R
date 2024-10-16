@@ -4,13 +4,9 @@ library(tidyverse)
 #Transformação de cada uma das abas da planilha em data frames
 
 df_athena<-as.data.frame(Olimpiadas_2000_2016_Verão_)
-
 df_londres<-as.data.frame(Olimpiadas_2000_2016_Verão_)
-
 df_rio<-as.data.frame(Olimpiadas_2000_2016_Verão_)
-
 df_sydney<-as.data.frame(Olimpiadas_2000_2016_Verão_)
-
 df_beijing<-as.data.frame(Olimpiadas_2000_2016_Verão_)
 
 #Igualando as colunas
@@ -49,10 +45,21 @@ df_beijing$Height<-as.numeric(df_beijing$Height)
 
 data<-bind_rows(df_athena, df_beijing, df_londres, df_rio, df_sydney)
 
-#Mudança de lbs p
+#Análise 1 COM duplicatas, ou seja, número de MEDALHAS
 
-data$Weight<-data$Weight/2.205
+df_women<-data%>%filter(Sex == "F" | Sex == "F")
 
+contagem<-table(df_women$Team)
 
+#Análise 1 sem duplicatas, ou seja, MULHERES MEDALHISTAS
 
+mulheres_medalhistas<-df_women[!duplicated(df_women$Names), ]
 
+contagem_2<-table(mulheres_medalhistas$Team)
+
+#Fazendo a análise 1 apenas p/ as olimpiadas de Atenas
+
+df2<-df_athena%>%filter(Sex == "F" | Sex == "F")
+df2<-df2[!duplicated(df2$Names), ]
+atenas<-table(df2$Team)
+view(atenas)
